@@ -26,3 +26,13 @@ def perimetro(long_lado, num_lados):
 
 def elipse(semiejeA, semiejeB):
 	return math.pi * semiejeA * semiejeB
+
+print(triangulo(2,6))
+print(cuadrado(5))
+print(rectangulo(2,5))
+print(rombo(2,5))
+print(trapecio(10,2,5))
+print(circulo(5))
+print(poligono_regular(2,6,2))
+print(perimetro(6, 10))
+print(elipse(5,10))

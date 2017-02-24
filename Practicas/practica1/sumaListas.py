@@ -10,5 +10,5 @@ def suma_lista(lista):
 		else: res += elemento
 	return res
 
-# lista_prueba = [1,1,1,1,[1,1], [1,2,3],1, "a", "1"]
-# print(suma_lista(lista_prueba))
+lista_prueba = [1,1,1,1,[1,1], [1,2,3],1, "a", "1"]
+print(suma_lista(lista_prueba))
