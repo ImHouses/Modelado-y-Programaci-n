@@ -39,6 +39,7 @@ class Videojuego:
 
 	def setDesarrollador(self, desarrollador):
 		self.desarrollador = desarrollador
+        
 
 v1 = Videojuego("Halo 5: Guardians", "FPS", 999.99, "343 Industries")
 v2 = Videojuego("Minecraft", "Sandbox", 545.50, "Mojang")
@@ -62,3 +63,18 @@ print(v8.toString())
 print(v9.toString())
 print(v10.toString())
 
+def masCaro(videojuegos):
+        precio = 0
+        caros = []
+        for vj in videojuegos:
+                if vj.getPrecio() >= precio:
+                        precio = vj.getPrecio()
+        for vj in videojuegos:
+                if vj.getPrecio() >= precio:
+                        caros.append(vj)
+        return caros
+def rebajaVideojuego(vj):
+        return Videojuego(vj.getNombre(), vj.getGenero(), vj.getPrecio() - (vj.getPrecio() * 0.15), vj.getDesarrollador())
+
+print("\nARTICULO: %s" % v1.toString())
+print("ARTICULO REBAJADO %s" % rebajaVideojuego(v1).toString())
