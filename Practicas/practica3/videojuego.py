@@ -63,18 +63,20 @@ print(v8.toString())
 print(v9.toString())
 print(v10.toString())
 
+# Regresa el videojuego más caro dada una lista de videojuegos.
 def masCaro(videojuegos):
         precio = 0
-        caros = []
+        mas_caro = None
         for vj in videojuegos:
                 if vj.getPrecio() >= precio:
                         precio = vj.getPrecio()
-        for vj in videojuegos:
-                if vj.getPrecio() >= precio:
-                        caros.append(vj)
-        return caros
-def rebajaVideojuego(vj):
-        return Videojuego(vj.getNombre(), vj.getGenero(), vj.getPrecio() - (vj.getPrecio() * 0.15), vj.getDesarrollador())
+                        mas_caro = vj
+        return mas_caro
 
-print("\nARTICULO: %s" % v1.toString())
-print("ARTICULO REBAJADO %s" % rebajaVideojuego(v1).toString())
+# Regresa un videojuego con la rebaja del 15 %
+def rebajaVideojuego(vj):
+        return Videojuego(vj.getNombre(), vj.getGenero(), vj.getPrecio() -
+                          (vj.getPrecio() * 0.15), vj.getDesarrollador())
+
+print("\n\nARTICULO: %s" % v1.toString())
+print("\nARTICULO REBAJADO %s" % rebajaVideojuego(v1).toString())
