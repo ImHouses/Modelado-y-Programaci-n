@@ -131,16 +131,40 @@ def main():
     elif tipoc == "Hierba":
         pkmn2 = PHierba(nombrec)
     elif tipoc == "Eléctrico":
-        pkmn2 = PElectrico(nombrec)
+        pkmn2 = PElectrico(nombrec  )
 
     seleccion_ataque = None
     while True:
         pkmn1.imprime_estado()
         pkmn2.imprime_estado()
         pkmn1.lista_ataques()
-        seleccion_ataque = pkmn1.ataques[int(input("Elige un ataque...\n")) - 1]
+        seleccion_ataque = pkmn1.ataques[int(input("\nElige un ataque...\n")) - 1]
         Pokemon.ataca(pkmn2, seleccion_ataque)
+        print("%s ha usado %s." % (pkmn1.nombre, seleccion_ataque.nombre))
+        input(">>Presiona ENTER para continuar.")
+        print(">>\nSe le han restado %d puntos de salud a %s."  %
+                (seleccion_ataque.dano, pkmn2.nombre))
+        if pkmn2.energia <= 0:
+            print("%s ya no tiene fuerzas para luchar, %s gana." % 
+                (pkmn2.nombre, pkmn1.nombre))
+            input(">>Presiona ENTER para continuar.")
+            break
+        input(">>Presiona ENTER para continuar")
+        seleccion_ataque = pkmn2.ataques[random.randint(0,3)]
+        pkmn1.imprime_estado()
         pkmn2.imprime_estado()
+        Pokemon.ataca(pkmn1, seleccion_ataque)
+        print(">>%s ha usado %s." % (pkmn2.nombre, seleccion_ataque.nombre))
+        input(">>Presiona ENTER para continuar")
+        print(">>\nSe le han restado %d puntos de salud a %s." %
+                (seleccion_ataque.dano, pkmn1.nombre))
+        if pkmn1.energia <= 0:
+            print("%s ya no tiene fuerzas para luchar, %s gana." % 
+                (pkmn1.nombre, pkmn2.nombre))
+            print("HAS PERDIDO.")
+            input(">>Presiona ENTER para continuar.")
+            break
+        input(">>Presiona ENTER para continuar")
 
  
 
