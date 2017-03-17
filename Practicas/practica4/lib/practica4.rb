@@ -1,6 +1,7 @@
 # Módulo para graficar.
 module Practica4
 
+	# Función para procesar las entradas de los dulces.
 	def procesar_dulces(archivo)
 		dulces = Hash.new()
 		for linea in archivo.readlines()
@@ -30,12 +31,14 @@ end
 
 # Clase para dulces.
 class Dulce
-
+	
+	# Get del nombre del dulce
 	attr_reader :nombre_dulce
 	
+	# Get del id.
 	attr_reader :id
 	
-	#Set y get de cantidad
+	#Set y get de cantidad.
 	attr_accessor :cantidad
 
 	# Constructor
@@ -44,6 +47,7 @@ class Dulce
 	end
 end
 
+# Main
 if __FILE__ == $0
 	include Practica4
 	entrada = File.open("entrada.txt", "r")
