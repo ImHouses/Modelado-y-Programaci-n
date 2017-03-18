@@ -15,12 +15,12 @@ module Practica4
 				dulces[id] = Dulce.new(nombre, id, cantidad)
 			elsif dulces.has_key?(id)
 				nuevo_dulce = dulces[id]
-				nuevo_dulce.cantidad = cantidad
+				nuevo_dulce.cantidad = nuevo_dulce.cantidad + cantidad
 				dulces[id] = nuevo_dulce
 			end
 		end
 		salida = File.open("salida.txt", "w")
-		lista_dulces = dulces.values()
+		lista_dulces = dulces.values().sort()
 		for dulce in lista_dulces
 			salida.write("#{dulce.nombre_dulce}-#{dulce.id}:#{dulce.cantidad}\n")
 			puts("#{dulce.nombre_dulce}-#{dulce.id}:#{dulce.cantidad}")
@@ -75,6 +75,7 @@ module Practica4
 		end
 		return cadena
 	end
+
 end
 
 # Clase para dulces.
@@ -98,12 +99,18 @@ class Dulce
 	def <=>(other)
 		return self.id <=> other.id
 	end
+
 end
 
 # Main
 if __FILE__ == $0
 	include Practica4
+	begin
 	entrada = File.open("entrada.txt", "r")
+	rescue
+		print("Archivo no encontrado, debe llamarse \'entrada.txt\'...")
+		exit
+	end
 	Practica4.procesar_dulces(entrada)
 	entrada.close()
 end
