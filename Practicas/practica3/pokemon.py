@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*- 
+
 import random
 
 # Clase para representar ataques.
@@ -47,8 +49,10 @@ class PAgua(Pokemon):
 
     # Constructor
     def __init__(self, nombre):
-        super().__init__(nombre, [Ataque("Chorro de agua"), Ataque("Rayo burbuja"),
-                            Ataque("Hidro-Cañón"), Ataque("Buceo")])
+        super().__init__(nombre, [Ataque("Chorro de agua"),
+                                    Ataque("Rayo burbuja"),
+                                    Ataque("Hidro-Cañón"),
+                                    Ataque("Buceo")])
 
     # Lista ataques
     def lista_ataques(self):
@@ -59,8 +63,10 @@ class PFuego(Pokemon):
 
     # Constructor
     def __init__(self, nombre):
-        super().__init__(nombre, [Ataque("Lanzallamas"), Ataque("Llamarada"),
-                            Ataque("Ascuas"), Ataque("Puño Fuego")])
+        super().__init__(nombre, [Ataque("Lanzallamas"),
+                                    Ataque("Llamarada"),
+                                    Ataque("Ascuas"),
+                                    Ataque("Puño Fuego")])
 
 
     # Lista ataques
@@ -72,8 +78,10 @@ class PHierba(Pokemon):
 
     # Constructor
     def __init__(self, nombre):
-        super().__init__(nombre, [Ataque("Hoja aguda"), Ataque("Drenadoras"),
-                          Ataque("Lluevehojas"), Ataque("Rayo Solar")])
+        super().__init__(nombre, [Ataque("Hoja aguda"), 
+                                    Ataque("Drenadoras"),
+                                    Ataque("Lluevehojas"),
+                                    Ataque("Rayo Solar")])
 
     # Lista ataques
     def lista_ataques(self):
@@ -85,9 +93,9 @@ class PElectrico(Pokemon):
     # Constructor
     def __init__(self, nombre):
         super().__init__(nombre, [Ataque("Carga"),
-                                                Ataque("Chispa"),
-                                                Ataque("Chispazo"),
-                                                Ataque("Onda Voltio")])
+                                    Ataque("Chispa"),
+                                    Ataque("Chispazo"),
+                                    Ataque("Onda Voltio")])
 
     # Lista ataques
     def lista_ataques(self):

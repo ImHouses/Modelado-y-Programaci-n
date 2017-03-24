@@ -1,4 +1,0 @@
-paletas-4:1
-bombones-3:2
-cicles-6:2
-paletas-15:11

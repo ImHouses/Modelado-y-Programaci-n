@@ -1,8 +1,4 @@
-# Funcionamiento
-El banco se guardará en un sólo archivo que consiste, por ejemplo,
-en lo siguiente:
-	
-| Nombre del cuentahabiente| Direccion          | Cuenta Activa    | Cuentas Inactivas 			|
-|:------------------------:|:-----------------  | ---------------- | -------------------------- | 
-| Juan Casas Monreal       | Calle 1, Col, CDMX | 2737819278387199 | 12839182718271, ...		|
+# Sistema de banco utilizando sockets.
+Se simula una especie de banco en back-end con un cliente que le manda peticiones de operaciones
+e inicios de sesión.
 	
