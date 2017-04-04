@@ -1,5 +1,6 @@
 # Modelado y programación - Práctica 6
-### Nombre: Casas Monreal Juan     No. de cuenta: 313021929
+### Nombre: Casas Monreal Juan
+### No. de cuenta: 313021929
 
 Todo el código se encuentra escrito en java y para su compilación se usa la 
 herramienta ANT.
