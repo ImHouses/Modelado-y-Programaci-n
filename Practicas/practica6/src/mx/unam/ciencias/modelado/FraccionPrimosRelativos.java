@@ -42,8 +42,12 @@ public class FraccionPrimosRelativos implements Comparable<FraccionPrimosRelativ
 	}
 
 	/**
-	*
-	*/
+     * Compara la fracción con otra fracción.
+     * @param fpr La fracción para comparar.
+     * @return un valor menor que cero si la fracción que llama el método es
+     *         menor que el parámetro; cero si son iguales; o mayor que cero si
+     *         es mayor.
+     */
 	@Override
 	public int compareTo(FraccionPrimosRelativos fpr) {
 		double n1 = (double) this.m / this.n;
