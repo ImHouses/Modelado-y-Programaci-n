@@ -22,6 +22,8 @@ public class Practica6 {
 			LinkedList<String> lineas = getLineas(lector);
 			StringBuilder salida = new StringBuilder();
 			for (String linea : lineas) {
+				if (linea.startsWith("#"))
+					continue;
 				try {
 				String[] datos = linea.split("\\s");
 				int m = Integer.parseInt(datos[0]);
