@@ -1,8 +1,5 @@
 package mx.unam.ciencias.modelado;
 
-import java.util.LinkedList;
-
-
 /**
 * <p>Clase para árboles de Stern-Brocot, los cuales permiten obtener todos los
 * 	números racionales n/m tales que n y m son primos relativos.</p>
