@@ -41,8 +41,8 @@
              author="false"
              version="false"
              use="true"
-             windowtitle="Estructuras de Datos">
-      <doctitle><![CDATA[<h1>Estructuras de Datos</h1>]]></doctitle>
+             windowtitle="Práctica 6 - Modelado y programación">
+      <doctitle><![CDATA[<h1>Práctica 6</h1>]]></doctitle>
       <link href="http://docs.oracle.com/javase/8/docs/api/" />
     </javadoc>
   </target>
