@@ -8,12 +8,12 @@ obtener un archivo y listar los archivos se necesitarán "peticiones" para el
 servidor de la siguiente forma.
 	 
 	
-	```
-	//Descarga de archivo.
+	
+	# Descarga de archivo.
 	download:nombredelarchivo
 
 	# Lista de archivos
 	list:
-	```
+	
 Además, se van a utilizar los siguientes patrones de diseño.
 - 
