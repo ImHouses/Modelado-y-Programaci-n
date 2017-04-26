@@ -7,13 +7,17 @@ Para el proyecto se establecerá una especie de "protocolo" en el que, para
 obtener un archivo y listar los archivos se necesitarán "peticiones" para el 
 servidor de la siguiente forma.
 
-```	 
+```
+# Carga de archivos.
+load:nombredelarchivo
 # Descarga de archivo.
 download:nombredelarchivo
-
 # Lista de archivos
 list:
 ```
 	
 Además, se van a utilizar los siguientes patrones de diseño.
-- 
+
+
+
+Para guardar los archivos

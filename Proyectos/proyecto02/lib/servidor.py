@@ -18,3 +18,5 @@ class ServidorFTP(object):
 		Returns:
 			El mensaje recibido a través de la conexión.
 		"""
+
+	
