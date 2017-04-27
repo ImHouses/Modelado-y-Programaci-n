@@ -22,7 +22,12 @@ class ServidorFTP(object):
 			mensaje_servidor = ">>SERVIDOR:"
 			while True:
 				mensaje_cliente = recibir_mensaje()
-				if mensaje_cliente.startswith("download")
+				if mensaje_cliente.startswith("download"):
+					nombre_archivo = mensaje_cliente.split(":")[1]
+					enviar_archivo(nombre_archivo)
+				elif mensaje_cliente.startswith("load"):
+					nombre_archivo = mensaje_cliente.split(":")[1]
+					recibir_archivo(nombre_archivo)
 
 	def enviar_mensaje(self, mensaje):
 		"""Envia un mensaje a través de la conexión.
@@ -42,16 +47,32 @@ class ServidorFTP(object):
 		return self.CONEXION.recv(2048).decode()
 
 	def enviar_archivo(self, nombre_archivo):
-		"""Envía en el archivo seleccionado en la lista de archivos.
+		"""Envía el archivo seleccionado en la lista de archivos.
 
 		Args:
 			nombre_archivo: El nombre del archivo.
 		"""
-		archivo = open("files/" + nombre_archivo, "r").readlines()
-		self.CONEXION.send("file")
+		archivo = open("../files/" + nombre_archivo, "r").readlines()
+		self.CONEXION.send("file".encode())
 		for linea in archivo:
-			self.CONEXION.send(linea)
-		self.CONEXION.send("end")
+			self.CONEXION.send(linea.encode())
+		self.CONEXION.send("end".encode())
+		archivo.close()
+
+	def recibir_archivo(self, nombre_archivo):
+		"""Recibe el archivo y guarda el nombre.
+
+		Args:
+			nombre_archivo: El nombre del archivo para guardar.
+		"""
+		archivo = open("../files/" + nombre_archivo, "w")
+		while True:
+			linea = self.CONEXION.recv(4096).decode()
+			if linea == "/end":
+				break
+			else:
+				archivo.write(self.CONEXION.recv(4096).decode())
+		archivo.close()
 		
 
 	
