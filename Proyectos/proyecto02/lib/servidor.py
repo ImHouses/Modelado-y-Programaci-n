@@ -20,9 +20,11 @@ class ServidorFTP(object):
 	def start(self):
 		"""El servidor escucha conexiones y hace todo su trabajo."""
 		while True:
-			self.s.listen()
-			self.CONEXION, direccion = self.s.accept()
 			mensaje_servidor = ">>SERVIDOR:"
+			self.s.listen()
+			print(mensaje_servidor + "ESPERANDO POR CLIENTES CTRL-C PARA TERMINAR EJECUCIÓN")
+			self.CONEXION, direccion = self.s.accept()
+			print(mensaje_servidor + "CONEXIÓN RECIBIDA DE " + str(direccion))
 			while True:
 				mensaje_cliente = self.recibir_mensaje()
 				if mensaje_cliente.startswith("download"):
@@ -34,7 +36,8 @@ class ServidorFTP(object):
 					recibir_archivo(nombre_archivo)
 				elif mensaje_cliente.startswith("list:"):
 					self.enviar_mensaje(str(self.LISTA_ARCHIVOS))
-
+				elif mensaje_cliente == "stop":
+					break
 
 	def enviar_mensaje(self, mensaje):
 		"""Envia un mensaje a través de la conexión.

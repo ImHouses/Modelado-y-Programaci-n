@@ -33,6 +33,7 @@ class ClienteFTP(object):
                 # Enviar Archivo
                 self.enviaArchivo()
             elif (opcion == 5):
+                self.miSocket.send("stop".encode())
                 print ("Todos los procesos terminados")
                 break
             else:
@@ -57,16 +58,15 @@ class ClienteFTP(object):
         
 
     def leerArchivo(self):
-        clientMessage = input("download:")
-        miLectura = "download:" + clientMessage
-        self.miSocket.send(miLectura.encode())
+        self.miSocket.send("download".encode())
+        print(self.miSocket.recv(4096).decode())
+        mensaje_cliente = input("¿Qué archivo deseas visualizar?")
+        descarga = "download:" + mensaje_cliente
+        self.miSocket.send(descarga.encode())
         serverMessage = self.miSocket.recv(4096).decode()
-        while serverMessage != "end":
-            if serverMessage == "file":
-                serverMessage = self.miSocket.recv(1024).decode()
-            else:
-                print (serverMessage)
-                serverMessage = self.miSocket.recv(1024).decode()
+        print("\n\n\n")
+        print(serverMessage)
+        print("\n\n\n")
         
 
     def enviaArchivo(self):
