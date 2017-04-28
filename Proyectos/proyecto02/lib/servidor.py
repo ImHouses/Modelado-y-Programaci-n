@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import socket
+from listaArchivos import ListaArchivos
+from os.path import dirname, abspath
 class ServidorFTP(object):
 	"""Clase para el servidor FTP.
 
@@ -8,11 +10,12 @@ class ServidorFTP(object):
 	"""
 	def __init__(self):
 		self.HOST = "127.0.0.1"
-		self.PORT = 5000
+		self.PORT = 5004
 		self.contador = 0
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		s.bind((HOST,PORT))
+		self.s.bind((self.HOST,self.PORT))
 		self.CONEXION = None
+		self.LISTA_ARCHIVOS = ListaArchivos()
 
 	def start(self):
 		"""El servidor escucha conexiones y hace todo su trabajo."""
@@ -21,13 +24,17 @@ class ServidorFTP(object):
 			self.CONEXION, direccion = self.s.accept()
 			mensaje_servidor = ">>SERVIDOR:"
 			while True:
-				mensaje_cliente = recibir_mensaje()
+				mensaje_cliente = self.recibir_mensaje()
 				if mensaje_cliente.startswith("download"):
-					nombre_archivo = mensaje_cliente.split(":")[1]
-					enviar_archivo(nombre_archivo)
+					self.enviar_mensaje(str(self.LISTA_ARCHIVOS))
+					nombre_archivo = self.recibir_mensaje().split(":")[1]
+					self.enviar_archivo(nombre_archivo)
 				elif mensaje_cliente.startswith("load"):
 					nombre_archivo = mensaje_cliente.split(":")[1]
 					recibir_archivo(nombre_archivo)
+				elif mensaje_cliente.startswith("list:"):
+					self.enviar_mensaje(str(self.LISTA_ARCHIVOS))
+
 
 	def enviar_mensaje(self, mensaje):
 		"""Envia un mensaje a través de la conexión.
@@ -52,11 +59,14 @@ class ServidorFTP(object):
 		Args:
 			nombre_archivo: El nombre del archivo.
 		"""
-		archivo = open("../files/" + nombre_archivo, "r").readlines()
-		self.CONEXION.send("file".encode())
-		for linea in archivo:
-			self.CONEXION.send(linea.encode())
-		self.CONEXION.send("end".encode())
+		d = dirname(dirname(abspath(__file__)))
+		archivo = open(str(d) + "/files/" + nombre_archivo, "r")
+		archivo_lineas = archivo.readlines()
+		print(archivo_lineas)
+		cadena = ""
+		for linea in archivo_lineas:
+			cadena += linea
+		self.CONEXION.send(cadena.encode())
 		archivo.close()
 
 	def recibir_archivo(self, nombre_archivo):
@@ -73,6 +83,9 @@ class ServidorFTP(object):
 			else:
 				archivo.write(self.CONEXION.recv(4096).decode())
 		archivo.close()
-		
+
+if __name__ == '__main__':
+	servidor = ServidorFTP()
+	servidor.start()
 
 	
