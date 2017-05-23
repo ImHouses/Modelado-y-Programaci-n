@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="proyecto3" default="all" basedir="." >
+
+  <property name="build.dir" value="build" />
+  <property name="src.dir"   value="src" />
+  <property name="doc.dir"   value="doc" />
+
+  <target name="all" depends="proyecto3.jar" />
+
+  <target name="proyecto3.jar" depends="compile.proyecto3">
+    <jar jarfile="parte1.jar">
+      <zipfileset dir="${build.dir}" prefix="" />
+      <manifest>
+        <attribute name="Main-Class" value="mx.unam.ciencias.modelado.Proyecto3"/>
+      </manifest>
+    </jar>
+  </target>
+
+  <target name="compile.proyecto3">
+    <mkdir dir="${build.dir}"/>
+    <javac srcdir="${src.dir}"
+           destdir="${build.dir}"
+           debug="true"
+           debuglevel="lines,vars,source"
+           includeantruntime="false"
+           deprecation="true"
+           nowarn="off">
+      <classpath>
+      </classpath>
+      <compilerarg value="-Xlint:unchecked"/>
+    </javac>
+  </target>
+
+  <target name="doc" depends="compile.proyecto3">
+    <mkdir dir="${doc.dir}"/>
+    <javadoc packagenames="mx.unam.ciencias.modelado.*"
+             sourcepath="src"
+             defaultexcludes="yes"
+             destdir="${doc.dir}"
+             charset="UTF-8"
+             author="false"
+             version="false"
+             use="true"
+             windowtitle="Práctica 8 - Modelado y programación">
+      <doctitle><![CDATA[<h1>Práctica 6</h1>]]></doctitle>
+      <link href="http://docs.oracle.com/javase/8/docs/api/" />
+    </javadoc>
+  </target>
+
+  <target name="clean">
+    <delete file="proyecto3.jar"/>
+    <delete dir="${build.dir}"/>
+    <delete dir="${doc.dir}"/>
+  </target>
+
+</project>

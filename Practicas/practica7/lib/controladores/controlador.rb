@@ -4,31 +4,14 @@ require_relative "../vistas/VistaLibreria.rb"
 # Controlador para interactuar con la vista y el modelo.
 module ControladorLibreria
 
-	@libros = Array.new()
+	@libros = []
 	@archivo = File.open(File.dirname(__FILE__) + "/../../data/libros.csv","r")
-
-	# Constructor
-	def initialize() 
-		lineas = @archivo.readlines()
-		for l in lineas
-			datos = l.split(",")
-			@libros.push(
-				new.Libro(
-					datos[0],
-					datos[1],
-					datos[2],
-					datos[3],
-					datos[4]
-					)
-				)
-		end
-	end
 
 	# Inicia la ejecución de la librería.
 	def start()
-		initialize()
+		inicializar_libros()
 		opcion = nil
-		while opcion != "5"
+		while opcion != "6"
 			VistaLibreria.muestra_menu()
 			opcion = VistaLibreria.get_cadena()
 			case opcion
@@ -41,18 +24,18 @@ module ControladorLibreria
 					isbn = VistaLibreria.get_isbn()
 					case o
 						when "1"
-							VistaLibreria.muestra_mensaje("Introduce el nuevo título\n")
+							VistaLibreria.muestra_mensaje("\nIntroduce el nuevo título\n")
 							nuevo_titulo = VistaLibreria.get_cadena()
 							editar_titulo(nuevo_titulo, isbn)
 						when "2"
-							VistaLibreria.muestra_mensaje("Introduce el nuevo autor\n")
+							VistaLibreria.muestra_mensaje("\nIntroduce el nuevo autor\n")
 							nuevo_autor = VistaLibreria.get_cadena()
 							editar_titulo(nuevo_autor, isbn)
 						when "3"
-							VistaLibreria.muestra_mensaje("Introduce el nuevo precio\n")
+							VistaLibreria.muestra_mensaje("\nIntroduce el nuevo precio\n")
 							nuevo_precio = VistaLibreria.get_float()
 							editar_precio(nuevo_precio, isbn)
-						else VistaLibreria.muestra_mensaje("Opción inválida.")
+						else VistaLibreria.muestra_mensaje("\nOpción inválida.")
 					end
 				when "3"
 					isbn = VistaLibreria.get_isbn()
@@ -62,6 +45,8 @@ module ControladorLibreria
 					nuevas_unidades = VistaLibreria.get_entero()
 					agregar_libros(nuevas_unidades, isbn)
 				when "5"
+					ver_libros()
+				when "6"
 					break
 				else VistaLibreria.muestra_mensaje("Opción inválida")
 			end
@@ -71,12 +56,31 @@ module ControladorLibreria
 		VistaLibreria.muestra_mensaje("Programa finalizado con éxito.")
 	end
 
-	def guarda_registros()
-		@archivo = File.open(File.dirname(__FILE__) + "/../../data/libros.csv","w")
-		for libro in @libros
-			@archivo.write("#{libro.isbn},#{libro.titulo},#{libro.autor},#{libro.precio},#{libro.unidades}\n")
+	# Cons
+	def inicializar_libros() 
+		lineas = @archivo.readlines()
+		for l in lineas
+			if l == "\n" then next end
+			datos = l.split(",")
+			@libros.push(
+				Libro.new(
+					datos[0],
+					datos[1],
+					datos[2],
+					datos[3],
+					datos[4]
+					)
+				)
 		end
 		@archivo.close()
+	end
+
+	def guarda_registros()
+		salida = File.open(File.dirname(__FILE__) + "/../../data/libros.csv","w")
+		for libro in @libros
+			salida.write("#{libro.isbn},#{libro.titulo},#{libro.autor},#{libro.precio},#{libro.unidades}\n")
+		end
+		salida.close()
 	end
 
 	# Registrar un nuevo libro.
@@ -147,7 +151,7 @@ module ControladorLibreria
 
 	# Muestra todos los libros.
 	def ver_libros
-		cadena = ""
+		cadena = "\n"
 		num_registros = 0
 		for libro in @libros
 			cadena += "#{libro.to_s}\n"

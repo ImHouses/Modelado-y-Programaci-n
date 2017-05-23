@@ -3,6 +3,7 @@
 import socket
 from listaArchivos import ListaArchivos
 from os.path import dirname, abspath
+
 class ServidorFTP(object):
 	"""Clase para el servidor FTP.
 
@@ -10,7 +11,7 @@ class ServidorFTP(object):
 	"""
 	def __init__(self):
 		self.HOST = "127.0.0.1"
-		self.PORT = 5004
+		self.PORT = 5001
 		self.contador = 0
 		self.s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 		self.s.bind((self.HOST,self.PORT))
@@ -28,16 +29,25 @@ class ServidorFTP(object):
 			while True:
 				mensaje_cliente = self.recibir_mensaje()
 				if mensaje_cliente.startswith("download"):
-					self.enviar_mensaje(str(self.LISTA_ARCHIVOS))
+					self.enviar_mensaje(self.hacer_lista())
 					nombre_archivo = self.recibir_mensaje().split(":")[1]
 					self.enviar_archivo(nombre_archivo)
 				elif mensaje_cliente.startswith("load"):
 					nombre_archivo = mensaje_cliente.split(":")[1]
-					recibir_archivo(nombre_archivo)
+					self.recibir_archivo(nombre_archivo)
 				elif mensaje_cliente.startswith("list:"):
-					self.enviar_mensaje(str(self.LISTA_ARCHIVOS))
+					self.enviar_mensaje(self.hacer_lista())
 				elif mensaje_cliente == "stop":
 					break
+
+	def hacer_lista(self):
+		if len(self.LISTA_ARCHIVOS) == 0:
+			return "NO HAY ARCHIVOS."
+		cadena = "\n"
+		i = 0
+		for a in self.LISTA_ARCHIVOS:
+			cadena += str(i) + ".  " + str(a)
+		return cadena
 
 	def enviar_mensaje(self, mensaje):
 		"""Envia un mensaje a través de la conexión.
@@ -51,6 +61,7 @@ class ServidorFTP(object):
 
 	def recibir_mensaje(self):
 		"""Recibe un mensaje a través de la conexión.
+
 		Returns:
 			El mensaje recibido a través de la conexión.
 		"""
@@ -62,15 +73,19 @@ class ServidorFTP(object):
 		Args:
 			nombre_archivo: El nombre del archivo.
 		"""
-		d = dirname(dirname(abspath(__file__)))
-		archivo = open(str(d) + "/files/" + nombre_archivo, "r")
-		archivo_lineas = archivo.readlines()
-		print(archivo_lineas)
-		cadena = ""
-		for linea in archivo_lineas:
-			cadena += linea
-		self.CONEXION.send(cadena.encode())
-		archivo.close()
+		try:
+			d = dirname(dirname(abspath(__file__)))
+
+			archivo = open(str(d) + "/files/" + nombre_archivo, "r")
+			archivo_lineas = archivo.readlines()
+			print(archivo_lineas)
+			cadena = ""
+			for linea in archivo_lineas:
+				cadena += linea
+			self.CONEXION.send(cadena.encode())
+			archivo.close()
+		except IOError as e:
+			print("Ha ocurrido un error")
 
 	def recibir_archivo(self, nombre_archivo):
 		"""Recibe el archivo y guarda el nombre.
@@ -78,17 +93,16 @@ class ServidorFTP(object):
 		Args:
 			nombre_archivo: El nombre del archivo para guardar.
 		"""
-		archivo = open("../files/" + nombre_archivo, "w")
-		while True:
-			linea = self.CONEXION.recv(4096).decode()
-			if linea == "/end":
-				break
-			else:
-				archivo.write(self.CONEXION.recv(4096).decode())
-		archivo.close()
-
-if __name__ == '__main__':
-	servidor = ServidorFTP()
-	servidor.start()
-
+		try:
+			d = dirname(dirname(abspath(__file__)))
+			archivo = open(str(d) + "/files/download/" + nombre_archivo, "w")
+			self.enviar_mensaje("OK")
+			a = self.recibir_mensaje()
+			archivo.write(a)
+			archivo.close()
+		except IOError as e:
+			raise IOError
+			self.enviar_mensaje("Error en el seridor, vuelve a intentar.")
+		else:
+			self.enviar_mensaje("Todo correcto.")
 	

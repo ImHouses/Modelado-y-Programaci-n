@@ -1,0 +1,30 @@
+.paarrafo {
+	margin-left: 40px;
+	margin-right: 40px
+}
+
+.lista {
+	margin-right: 80px;
+	margin-left: 80px;
+}
+.imagenes {
+	display: inline;
+}
+th, td {
+	border: 1px	solid black;
+	padding: 15px;
+}
+th {
+	text-align: left;
+}
+div {
+	margin-right: 40px;
+	margin-left: 40px;
+}
+
+body {
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}

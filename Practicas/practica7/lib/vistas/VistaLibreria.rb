@@ -26,7 +26,8 @@ class VistaLibreria
 					 "2. Editar un libro\n" \
 					 "3. Eliminar un libro\n" \
 					 "4. Agregar existencias\n" \
-					 "5. Salir\n"
+					 "5. Ver libros existentes\n" \
+					 "6. Salir\n"
 		puts(menu)
 	end
 

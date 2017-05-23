@@ -1,0 +1,33 @@
+@font-face{font-family:'Varela Round';src('assets/font/font.ttf')}
+.paarrafo {
+	margin-left: 40px;
+	margin-right: 40px
+}
+
+.lista {
+	margin-right: 80px;
+	margin-left: 80px;
+}
+
+body, body*{
+	margin-top: 10px;
+	margin-right: 10px;
+	margin-left: 10px;
+	margin-bottom: 10px;
+}
+img {
+	width: 400px;
+	height: 400px;
+}
+
+th, td {
+	border: 1px	solid black;
+	padding: 15px;
+}
+th {
+	text-align: left;
+}
+div {
+	margin-right: 40px;
+	margin-left: 40px;
+}
