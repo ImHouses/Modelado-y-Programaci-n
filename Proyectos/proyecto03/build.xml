@@ -8,7 +8,7 @@
   <target name="all" depends="proyecto3.jar" />
 
   <target name="proyecto3.jar" depends="compile.proyecto3">
-    <jar jarfile="parte1.jar">
+    <jar jarfile="Proyecto3.jar">
       <zipfileset dir="${build.dir}" prefix="" />
       <manifest>
         <attribute name="Main-Class" value="mx.unam.ciencias.modelado.Proyecto3"/>

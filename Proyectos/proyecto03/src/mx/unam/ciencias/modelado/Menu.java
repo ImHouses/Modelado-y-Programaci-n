@@ -20,13 +20,16 @@ import javax.swing.ImageIcon;
 public class Menu extends JFrame   {
 
    private static final String nombreArchivo = "almacen.ser";
+   private static final String archivoClientes = "clientes.ser";
    ArrayList<Producto> almacen = new ArrayList<Producto>();
+   ArrayList<Cliente> clientes;
    JTabbedPane panelFichas = new JTabbedPane(); 
    
 
    public Menu() {
       super("Almacen de abarrotes ");
       almacen = leerProductos();
+      leerClientes();
       ponPestaniaAgregar();
       ponPestaniaVerTodo();
       ponPestaniaBusqueda();
@@ -39,7 +42,7 @@ public class Menu extends JFrame   {
 
    public void ponPestaniaAgregar() {
 
-      Icon imagen = new ImageIcon(  "carrito.jpg"  );
+      Icon imagen = new ImageIcon("carrito.jpg");
       JLabel estampa = new JLabel(imagen);      
       //Etiquetas de los mensajes
       JLabel label0 = new JLabel("Rellena la siguiente información");
@@ -213,7 +216,7 @@ public class Menu extends JFrame   {
         JTextField campoApellidoP = new JTextField();
         JTextField campoApellidoM = new JTextField();
         JTextField campoLogin = new JTextField();
-        JTextField campoPass = new JTextField();
+        JTextField campoPass = new JPasswordField();
         JButton botonRegistro = new JButton("Registrar nuevo cliente");
         botonRegistro.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -232,11 +235,14 @@ public class Menu extends JFrame   {
                         "Algún campo es vacío, pruebe otra vez.",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
-                else 
+                else {
+                    clientes.add(new Cliente(nombre, apellidoPaterno, apellidoMaterno, login, pass));
+                    escribeClientes();
                     JOptionPane.showMessageDialog(null,
                         "Registro",
                         "OK",
                         JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
         panel.add(new JLabel("Nombre"));
@@ -265,6 +271,7 @@ public class Menu extends JFrame   {
         boton_salir.addActionListener(new ActionListener() {             
         public void actionPerformed(ActionEvent evento) {                                   
             grabar();
+            escribeClientes();
             System.exit(1);
          }                       
       });     
@@ -292,7 +299,7 @@ public class Menu extends JFrame   {
    }
 
    /**
-   * Busca un pro
+   * Busca un producto.
    *
    */
    public String buscaProductos(String cadena) {
@@ -304,6 +311,18 @@ public class Menu extends JFrame   {
             }
         }
         return res;
+   }
+
+   public String buscaCliente(String cadena) {
+        String s;
+        String resultado = "<html>";
+        for(int i = 0; i < clientes.size(); i++) {
+            s = clientes.get(i).toString();
+            if(s.contains(cadena)) {
+                resultado += "<br>" + s;
+            }
+        }
+        return resultado;
    }
 
    /**
@@ -320,6 +339,18 @@ public class Menu extends JFrame   {
         }
       }
       return borrado;
+   }
+
+   public boolean borraCliente(String login) {
+        int i = 0;
+        for(Cliente c : clientes) {
+            if (login.equals(c.getLogin())) {
+                clientes.remove(i);
+                return true;
+            }
+            i++;
+        }
+        return false;
    }
 
 
@@ -344,13 +375,44 @@ public class Menu extends JFrame   {
       return almacen;
    }
 
+   @SuppressWarnings("unchecked")
+   public void leerClientes() {
+    try {
+        ObjectInputStream lector =
+            new ObjectInputStream(new FileInputStream(archivoClientes));
+        ArrayList<Cliente> clientes = (ArrayList<Cliente>) lector.readObject();
+        lector.close();
+        this.clientes = clientes;
+    } catch(IOException ioe) {
+        System.err.println("Lectura fallida: " + ioe);
+    } catch(ClassNotFoundException cnfe) {
+        System.err.println("Lectura fallida: " + cnfe);
+    }
+   }
+
+   public void escribeClientes() {
+    try {
+        ObjectOutputStream writer =
+            new ObjectOutputStream(new FileOutputStream(archivoClientes));
+        writer.writeObject(clientes);
+        writer.close();
+    } catch(NotSerializableException e) {
+        System
+            .err
+            .println("Error en la escritura: " + e + " objeto no serializable");
+    } catch(IOException ioe) {
+        System
+            .err
+            .println("Error en la escritura: " + ioe + " objeto no serializable");
+    }
+   }
 
    /**   
     * Envía a un archivo la informacion contenida en la agenda.
     */
    public void grabar(){
       try{
-        ObjectOutputStream a= new ObjectOutputStream(new FileOutputStream(nombreArchivo));
+        ObjectOutputStream a = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
         a.writeObject(almacen);
         a.close();
       }
