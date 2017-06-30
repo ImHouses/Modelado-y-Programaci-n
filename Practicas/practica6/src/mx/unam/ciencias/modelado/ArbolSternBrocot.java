@@ -3,11 +3,11 @@ package mx.unam.ciencias.modelado;
 /**
 * <p>Clase para árboles de Stern-Brocot, los cuales permiten obtener todos los
 * 	números racionales n/m tales que n y m son primos relativos.</p>
-* <p>La clase nos provee de un método para obtener la ruta una vez que se ha 
+* <p>La clase nos provee de un método para obtener la ruta una vez que se ha
 *	agregado un número racional de la forma n/m tal que n y m son primos
-*  	relativos.</p> 
+*  	relativos.</p>
 */
-public class ArbolSternBrocot 
+public class ArbolSternBrocot
 	extends ArbolBinarioOrdenado<FraccionPrimosRelativos> {
 
 	/* La base izquierda de las fracciones. */
@@ -21,7 +21,7 @@ public class ArbolSternBrocot
 
 	/* Constructor. */
 	public ArbolSternBrocot() {
-		this.baseIzquierda = new FraccionPrimosRelativos(0,1);	
+		this.baseIzquierda = new FraccionPrimosRelativos(0,1);
 		this.baseDerecha = new FraccionPrimosRelativos(1,0);
 		raiz = nuevoVertice(this.baseIzquierda.suma(this.baseDerecha));
 		this.ruta = "";
@@ -58,7 +58,7 @@ public class ArbolSternBrocot
 				//System.out.println("Camino izquierdo: " + v.elemento);
 				if (v == raiz)
 					v.izquierdo = nuevoVertice(v.elemento.suma(bi));
-				else if (esIzq(v)) 
+				else if (esIzq(v))
 						v.izquierdo = nuevoVertice(v.elemento.suma(bi));
 					 else v.izquierdo = nuevoVertice(v.elemento.suma(v.padre.elemento));
 				v.izquierdo.padre = v;
@@ -73,7 +73,7 @@ public class ArbolSternBrocot
 
 	/**
 	* Regresa el abuelo del vértice.
-	* @param El vértice del que necesitamos el abuelo.
+	* @param v vértice del que necesitamos el abuelo.
 	* @return El abuelo del vértice.
 	*/
 	private Vertice getAbuelo(Vertice v) {
